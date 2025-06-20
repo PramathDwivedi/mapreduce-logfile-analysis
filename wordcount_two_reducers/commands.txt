@@ -1,0 +1,17 @@
+# Create input directory in HDFS
+hadoop fs -mkdir -p /user/pramathd2301/input
+
+# Upload input file to HDFS
+hadoop fs -put dbzinput.txt /user/pramathd2301/input/
+
+# Run Hadoop MapReduce WordCount Job
+hadoop jar wc.jar WordCount2 /user/pramathd2301/input/dbzinput.txt /user/pramathd2301/output.dbz/
+
+# Check output from HDFS
+hadoop fs -cat /user/pramathd2301/output.dbz/part-r-00000
+# Compile the Java file
+javac -cp $(hadoop classpath) WordCount2.java
+
+# Create the jar file
+jar cf wc.jar WordCount2*.class
+

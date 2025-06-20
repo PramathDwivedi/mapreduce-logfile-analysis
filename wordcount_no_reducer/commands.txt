@@ -1,0 +1,11 @@
+hadoop fs -mkdir -p /user/pramathd2301/input
+
+hadoop fs -put ~/input/dbzinput.txt /user/pramathd2301/input/
+
+javac -cp $(hadoop classpath) WordCountNoReducer.java
+
+jar cf wc_no_reducer.jar WordCount*.class
+
+hadoop jar wc_no_reducer.jar WordCountNoReducer /user/pramathd2301/input/dbzinput.txt /user/pramathd2301/output_no_reducer -D mapreduce.job.reduces=0
+
+hadoop fs -cat /user/pramathd2301/output_no_reducer/part-m-00000
